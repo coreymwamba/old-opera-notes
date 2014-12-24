@@ -7,4 +7,4 @@ Clicking on the + button or focusing the bottom box (when it's empty) will start
 
 Uses code example from <https://github.com/curtislacy/inject-sidebar> - many thanks!
 
-You can try the packaged extension if you wish, but it's not verified!!
+You can try the [packaged extension](https://github.com/coreymwamba/old-opera-notes/old-opera-notes.nex) if you wish, but it's not verified!!
