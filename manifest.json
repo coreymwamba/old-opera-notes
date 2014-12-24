@@ -1,0 +1,26 @@
+{
+	"name": "Old Opera Notes",
+	"manifest_version": 2,
+	"description": "Inject a notes sidebar like old Opera used to",
+	"version": "1",
+	"background": {
+		"page": "background.html"
+	},
+	"page_action": {
+		"default_icon": "icon_19.png",
+		"default_title": "Inject notes"
+	},
+	"content_scripts": [
+		{
+			"matches": ["<all_urls>"],
+			"js": ["panel-script.js"]
+		}
+	],
+	"permissions": [
+		"tabs"
+	],
+ "web_accessible_resources": [
+	"old-opera-notes.html",
+	"notes.js"
+]
+}
