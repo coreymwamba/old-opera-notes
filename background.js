@@ -1,11 +1,12 @@
-chrome.contextMenus.ACTION_MENU_TOP_LEVEL_LIMIT = 1;
+
 chrome.contextMenus.create({
-        title: "Copy to Note",
+        id: "copy-1",
+	title: "Copy to Note",
         contexts: ["selection"],
         onclick: copyToNote
 });
 
-function copyToNote(t){
+function copyToNote(t) {
 var noteList = document.getElementById("notelist");
 var newDate = new Date();
 var noteId = "note-"+newDate.getTime();
