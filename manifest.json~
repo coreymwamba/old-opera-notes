@@ -4,7 +4,7 @@
 	"description": "Simple notes in a panel, with a context menu item to copy text to a note: sound familiar?",
 	"version": "1.1",
 	"background": {
-		 "page": "old-opera-notes.html"
+		 "page": "old-opera-notes.html",
 		 		}, 	
  	"minimum_opera_version": "29",
 		"sidebar_action": {

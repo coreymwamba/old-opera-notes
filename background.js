@@ -1,4 +1,3 @@
-
 chrome.contextMenus.create({
         id: "copy-1",
 	title: "Copy to Note",
@@ -23,5 +22,6 @@ else {
 noteListItem.innerHTML = noteText;
 }
 noteList.appendChild(noteListItem);
+
 }
 

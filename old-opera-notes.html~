@@ -24,7 +24,7 @@ div#buts {text-align: right}
 p {padding:0; margin-top: 0;}
 input[type="button"]:hover {background-color: #ffb; opacity: 1.0; cursor: pointer}
 </style>
-
+<script type="text/javascript" src="notes.js"></script>
 </head>
 <body>
 <div id="buts">
@@ -33,7 +33,7 @@ input[type="button"]:hover {background-color: #ffb; opacity: 1.0; cursor: pointe
 </div>
 <select id="notelist" multiple></select>
 <blockquote contenteditable="true"></blockquote>
+
 <script type="text/javascript" src="background.js"></script>
-<script type="text/javascript" src="notes.js"></script>
 </body> 
 </html>
