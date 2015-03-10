@@ -10,7 +10,6 @@
         	"default_panel": "old-opera-notes.html"
 	},
 	"permissions": [
-		"tabs",
-                "contextMenus"
+		"contextMenus"
 	]
 }
