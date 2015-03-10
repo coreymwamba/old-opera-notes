@@ -1,26 +1,16 @@
 {
 	"name": "Old Opera Notes",
 	"manifest_version": 2,
-	"description": "Inject a notes sidebar like old Opera used to",
-	"version": "1",
-	"background": {
-		"page": "background.html"
-	},
-	"page_action": {
+	"description": "Simple notes in a panel: sound familiar?",
+	"version": "1.1",
+ 	"minimum_opera_version": "29",
+	"sidebar_action": {
 		"default_icon": "icon_19.png",
-		"default_title": "Inject notes"
+		"default_title": "Notes",
+        	"default_panel": "old-opera-notes.html"
 	},
-	"content_scripts": [
-		{
-			"matches": ["<all_urls>"],
-			"js": ["panel-script.js"]
-		}
-	],
 	"permissions": [
-		"tabs"
-	],
- "web_accessible_resources": [
-	"old-opera-notes.html",
-	"notes.js"
-]
+		"tabs",
+                "contextMenus"
+	]
 }

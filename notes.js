@@ -2,20 +2,25 @@
 var blocksq = document.getElementsByTagName("blockquote");
 var bq = blocksq[0];
 var newNote = document.getElementById("newnote");
+var delNote = document.getElementById("delnote");
 var noteList = document.getElementById("notelist");
 bq.addEventListener("keyup",saveNote,true);
 bq.addEventListener("focus",createNote,true);
 newNote.addEventListener("click",createNoteByClick,true);
+delNote.addEventListener("click",deleteNoteByClick,true);
 noteList.addEventListener("keydown",deleteNote,true);
 noteList.addEventListener("change",displayNote,true);
+
 //display note
+
 function displayNote() {
 var selectedListItem = noteList.options[noteList.selectedIndex];
-var e = selectedListItem.value;
 var j = selectedListItem.id;
-bq.setAttribute("id",e);
+bq.setAttribute("id","note-"+j);
 bq.innerHTML = localStorage.getItem(j);
 }
+
+
 
 //delete notes with delete key
 
@@ -23,9 +28,9 @@ function deleteNote(d){
 var selectedListItem = noteList.options[noteList.selectedIndex];
 if (d.keyCode == 46) {
 var j = selectedListItem.value;
-var deletedNode = document.getElementById("note-"+j);
-localStorage.removeItem("note-"+j);
-var sbq = document.getElementById(j);
+var deletedNode = document.getElementById(j);
+localStorage.removeItem(j);
+var sbq = document.getElementById("note-"+j);
 sbq.innerHTML = "";
 sbq.removeAttribute("id");
 while (noteList.lastChild) {
@@ -35,7 +40,19 @@ displayListNotes();
 }
 }
 
-
+function deleteNoteByClick(){
+var selectedListItem = noteList.options[noteList.selectedIndex];
+var j = selectedListItem.id;
+var deletedNode = document.getElementById(j);
+var sbq = document.getElementById("note-"+j);
+sbq.innerHTML = "";
+localStorage.removeItem(j);
+sbq.removeAttribute("id");
+while (noteList.lastChild) {
+   noteList.removeChild(noteList.lastChild);
+}
+displayListNotes();
+}
 
 // create a new note, inserting
 // a blockquote with an id
@@ -48,9 +65,9 @@ displayListNotes();
 function createNoteByClick() {
 var newDate = new Date();
 var noteId = newDate.getTime();
-bq.setAttribute("id",noteId);
+bq.setAttribute("id","note-"+noteId);
 bq.innerHTML = null;
-localStorage.setItem("note-"+noteId,"");
+localStorage.setItem(noteId,"");
 bq.focus();
 }
 
@@ -58,15 +75,16 @@ function createNote() {
 if (bq.hasAttribute("id") == false) {
 var newDate = new Date();
 var noteId = newDate.getTime();
-bq.setAttribute("id",noteId);
-localStorage.setItem("note-"+noteId,"");
+bq.setAttribute("id","note-"+noteId);
+localStorage.setItem(noteId,"");
 }
 }
-//
+
 
 function saveNote() {
 var noteList = document.getElementById("notelist");
-prevNoteId = "note-"+bq.id; 
+bqId = bq.id;
+prevNoteId = bqId.replace("note-",""); 
 var alreadyThere = document.getElementById(prevNoteId); 
 prevNoteText = localStorage.getItem(prevNoteId); 
 noteListItem = document.createElement("option");
@@ -105,11 +123,13 @@ noteTitle = noteValue;
 noteListItem = document.createElement("option"); 
 noteListItem.innerHTML = noteTitle; 
 noteListItem.setAttribute("id",noteKey);
-noteListItemValue = noteKey.replace("note-",""); 
-noteListItem.setAttribute("value",noteListItemValue);
+prevNoteId = noteListItem.id; 
+var alreadyThere = document.getElementById(prevNoteId);
+if (!alreadyThere){
 noteList.appendChild(noteListItem);
 }
-
 }
+}
+
 window.onload = displayListNotes();
 
