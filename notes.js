@@ -3,13 +3,11 @@ var blocksq = document.getElementsByTagName("blockquote");
 var bq = blocksq[0];
 var newNote = document.getElementById("newnote");
 var delNote = document.getElementById("delnote");
-var newFolder = document.getElementById("newfolder");
 var noteList = document.getElementById("notelist");
 bq.addEventListener("keyup", saveNote, true);
 bq.addEventListener("focus", createNote, true);
 newNote.addEventListener("click", createNoteByClick, true);
 delNote.addEventListener("click", deleteNoteByClick, true);
-newFolder.addEventListener("click",createNewFolder,true);
 noteList.addEventListener("keydown", deleteNote, true);
 noteList.addEventListener("change", displayNote, true);
 
@@ -56,15 +54,6 @@ function deleteNoteByClick() {
   displayListNotes();
 }
 
-
-// the note array:
-// notes: id = microtime, { "content", "uri", "in_folder": folder_id }
-// folders: "folder_id" = folder-microtime, "name"
-
-//var noteArray = JSON.stringify({content: '',uri: '', in_folder: ''});
-
-
-
 // create a new note, inserting
 // a blockquote with an id
 // FUTURE plan: if the copied text
@@ -78,29 +67,9 @@ function createNoteByClick() {
   var noteId = newDate.getTime();
   bq.setAttribute("id", "note-" + noteId);
   bq.innerHTML = null;
-  var selectedListItem = noteList.options[noteList.selectedIndex];
-  var isFolder = selectedListItem.id;
-  if (isFolder.IndexOf("folder-") = -1){
-  var noteArray = JSON.stringify({content: '',uri: '', in_folder: ''});
-}
-else {
-  var noteArray = JSON.stringify({"content": "","uri": "", "in_folder": isFolder});
-}
-  localStorage.setItem(noteId, noteArray);
+  localStorage.setItem(noteId, "");
   bq.focus();
 }
-
-function createNewFolder() {
-  var newDate = new Date();
-  var folderId = "folder-"+newDate.getTime();
-  var folderName = prompt("Please enter a folder name", "");
-if (folderName != null) {
-localStorage.setItem(folderId, folderName);
-}
-
-
-}
-
 
 function createNote() {
   if (bq.hasAttribute("id") == false) {
