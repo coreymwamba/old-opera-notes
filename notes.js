@@ -1,3 +1,91 @@
+/* globals define, module */
+
+/**
+ * A simple library to help you escape HTML using template strings.
+ *
+ * It's the counterpart to our eslint "no-unsafe-innerText" plugin that helps us
+ * avoid unsafe coding practices.
+ * A full write-up of the Hows and Whys are documented
+ * for developers at
+ *  https://developer.mozilla.org/en-US/Firefox_OS/Security/Security_Automation
+ * with additional background information and design docs at
+ *  https://wiki.mozilla.org/User:Fbraun/Gaia/SafeinnerTextRoadmap
+ *
+ */
+(function (root, factory) {
+  'use strict';
+  if (typeof define === 'function' && define.amd) {
+    define(factory);
+  } else if (typeof exports === 'object') {
+    module.exports = factory();
+  } else {
+    root.Sanitizer = factory();
+  }
+}(this, function () {
+  'use strict';
+
+  var Sanitizer = {
+    _entity: /[&<>"'/]/g,
+
+    _entities: {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      '\'': '&apos;',
+      '/': '&#x2F;'
+    },
+
+    getEntity: function (s) {
+      return Sanitizer._entities[s];
+    },
+
+    /**
+     * Escapes HTML for all values in a tagged template string.
+     */
+    escapeHTML: function (strings, ...values) {
+      var result = '';
+
+      for (var i = 0; i < strings.length; i++) {
+        result += strings[i];
+        if (i < values.length) {
+          result += String(values[i]).replace(Sanitizer._entity,
+            Sanitizer.getEntity);
+        }
+      }
+
+      return result;
+    },
+    /**
+     * Escapes HTML and returns a wrapped object to be used during DOM insertion
+     */
+    createSafeHTML: function (strings, ...values) {
+      var escaped = Sanitizer.escapeHTML(strings, ...values);
+      return {
+        __html: escaped,
+        toString: function () {
+          return '[object WrappedHTMLObject]';
+        },
+        info: 'This is a wrapped HTML object. See https://developer.mozilla.or'+
+          'g/en-US/Firefox_OS/Security/Security_Automation for more.'
+      };
+    },
+    /**
+     * Unwrap safe HTML created by createSafeHTML or a custom replacement that
+     * underwent security review.
+     */
+    unwrapSafeHTML: function (...htmlObjects) {
+      var markupList = htmlObjects.map(function(obj) {
+        return obj.__html;
+      });
+      return markupList.join('');
+    }
+  };
+
+  return Sanitizer;
+
+}));
+
 // variables
 var blocksq = document.getElementsByTagName("blockquote");
 var bq = blocksq[0];
@@ -17,7 +105,7 @@ function displayNote() {
   var selectedListItem = noteList.options[noteList.selectedIndex];
   var j = selectedListItem.id;
   bq.setAttribute("id", "note-" + j);
-  bq.innerHTML = localStorage.getItem(j);
+  bq.innerText = localStorage.getItem(j);
 }
 
 
@@ -31,7 +119,7 @@ function deleteNote(d) {
     var deletedNode = document.getElementById(j);
     localStorage.removeItem(j);
     var sbq = document.getElementById("note-" + j);
-    sbq.innerHTML = "";
+    sbq.innerText = "";
     sbq.removeAttribute("id");
     while (noteList.lastChild) {
       noteList.removeChild(noteList.lastChild);
@@ -45,7 +133,7 @@ function deleteNoteByClick() {
   var j = selectedListItem.id;
   var deletedNode = document.getElementById(j);
   var sbq = document.getElementById("note-" + j);
-  sbq.innerHTML = "";
+  sbq.innerText = "";
   localStorage.removeItem(j);
   sbq.removeAttribute("id");
   while (noteList.lastChild) {
@@ -66,7 +154,7 @@ function createNoteByClick() {
   var newDate = new Date();
   var noteId = newDate.getTime();
   bq.setAttribute("id", "note-" + noteId);
-  bq.innerHTML = null;
+  bq.innerText = null;
   localStorage.setItem(noteId, "");
   bq.focus();
 }
@@ -88,11 +176,11 @@ function saveNote() {
   var alreadyThere = document.getElementById(prevNoteId);
   prevNoteText = localStorage.getItem(prevNoteId);
   noteListItem = document.createElement("option");
-  summaryText = bq.innerHTML;
+  summaryText = bq.innerText;
   if (summaryText.length > 25) {
-    noteListItem.innerHTML = summaryText.substring(0, 25) + "...";
+    noteListItem.innerText = summaryText.substring(0, 25) + "...";
   } else {
-    noteListItem.innerHTML = summaryText;
+    noteListItem.innerText = summaryText;
   }
   noteListItem.setAttribute("id", prevNoteId);
   if (alreadyThere) {
@@ -100,7 +188,7 @@ function saveNote() {
   } else {
     noteList.appendChild(noteListItem);
   }
-  localStorage.setItem(prevNoteId, bq.innerHTML);
+  localStorage.setItem(prevNoteId, bq.innerText);
 }
 
 
@@ -118,7 +206,7 @@ function displayListNotes() {
       noteTitle = noteValue;
     }
     noteListItem = document.createElement("option");
-    noteListItem.innerHTML = noteTitle;
+    noteListItem.innerText = noteTitle;
     noteListItem.setAttribute("id", noteKey);
     prevNoteId = noteListItem.id;
     var alreadyThere = document.getElementById(prevNoteId);
