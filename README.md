@@ -11,6 +11,8 @@ You can also copy text from a web page to a note using the context menu (but you
 
 Works with Opera (Blink engine); possibly other Chromium browsers; and Firefox.
 
+Nab officially for [Firefox](https://addons.mozilla.org/en-US/firefox/addon/old-opera-notes/).
+
 Open source icons from [PICOL](http://www.picol.org).
 
 ![#](screenshot1.png)
