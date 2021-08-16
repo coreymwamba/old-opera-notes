@@ -4,8 +4,14 @@
 <meta charset="utf-8">
 <title>Notes</title>
 <style type="text/css">
+@media (prefers-color-scheme: dark) {  
+  .themed {  
+     background-color: #202124;    
+     color: #a5a5a5;  
+  }
+}
 body {font-size: 100%; margin: 1em auto; padding: 8px; width: 95%}
-select { width: 90%; margin: 1em auto; min-height:12em; display: block; resize: vertical; font-size: 1em}
+select { width: 90%; margin: 1em auto; min-height:12em; display: block; resize: vertical; font-size: 1em; overflow: auto}
 option {font-size: 1.2em}
 #newnote {background-image: url(addnote.png);}
 #delnote {background-image: url(delnote.png);}
@@ -31,8 +37,8 @@ input[type="button"]:hover {background-color: #ffb; opacity: 1.0; cursor: pointe
 <input type="button" id="newnote">
 <input type="button" id="delnote">
 </div>
-<select id="notelist" multiple></select>
-<blockquote contenteditable="true"></blockquote>
+<select id="notelist" class="themed" multiple></select>
+<blockquote class="themed" contenteditable="true"></blockquote>
 <script type="text/javascript" src="notes.js"></script>
 </body>
 </html>
