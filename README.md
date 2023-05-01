@@ -1,6 +1,8 @@
 Simple Notes
 ===============
 
+**Don't use this: just use Vivaldi instead.**
+
 A simple note panel in HTML and JavaScript - includes a "copy to note" context menu item as well.
 
 Use the Add Note icon - or click inside the lower text box - to add a new note. Notes are saved as you type.
