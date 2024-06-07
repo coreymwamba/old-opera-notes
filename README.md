@@ -1,7 +1,7 @@
 Simple Notes
 ===============
 
-**Don't use this: just use Vivaldi instead.**
+**Don't use this: just use Vivaldi instead. I am no longer actively working on this, so if anyone wants to take it on, please ask and I will transfer the repo.**
 
 A simple note panel in HTML and JavaScript - includes a "copy to note" context menu item as well.
 
